@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rake'
+gem 'rake', '~> 10.3.2'
 
 group :test do
   gem 'minitest', '~> 5.4.0'
