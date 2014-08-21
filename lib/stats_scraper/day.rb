@@ -1,5 +1,3 @@
-require 'uri'
-
 module StatsScraper
   class InvalidResponse < StandardError; end
 
