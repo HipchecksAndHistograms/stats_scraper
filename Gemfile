@@ -2,6 +2,9 @@ source 'https://rubygems.org'
 
 gem 'rake', '~> 10.3.2'
 
+gem 'httparty', '~> 0.13.1'
+gem 'nokogiri', '~> 1.6.3.1'
+
 group :test do
   gem 'minitest', '~> 5.4.0'
   gem 'mocha', '~> 1.1.0'

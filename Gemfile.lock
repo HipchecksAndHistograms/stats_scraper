@@ -5,11 +5,19 @@ GEM
     coderay (1.1.0)
     crack (0.4.2)
       safe_yaml (~> 1.0.0)
+    httparty (0.13.1)
+      json (~> 1.8)
+      multi_xml (>= 0.5.2)
+    json (1.8.1)
     metaclass (0.0.4)
     method_source (0.8.2)
+    mini_portile (0.6.0)
     minitest (5.4.0)
     mocha (1.1.0)
       metaclass (~> 0.0.1)
+    multi_xml (0.5.5)
+    nokogiri (1.6.3.1)
+      mini_portile (= 0.6.0)
     pry (0.10.1)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -26,9 +34,11 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  httparty (~> 0.13.1)
   minitest (~> 5.4.0)
   mocha (~> 1.1.0)
+  nokogiri (~> 1.6.3.1)
   pry (~> 0.10.1)
-  rake
+  rake (~> 10.3.2)
   vcr (~> 2.9.2)
   webmock (~> 1.18.0)
