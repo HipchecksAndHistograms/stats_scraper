@@ -9,7 +9,7 @@ module StatsScraper
     end
 
     def events
-      @events ||= game_sheet.xpath("/html/body/table/tr[contains(@class, 'evenColor')]")
+      @events ||= game_sheet.xpath("/html/body/table/tr[contains(@class, 'evenColor')]").map{ |e| Event.new(Nokogiri::HTML(e.to_html)) }
     end
 
     def visiting_team
