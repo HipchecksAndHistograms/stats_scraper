@@ -19,6 +19,7 @@ For now, there are no plans to do any further modelling / processing of the data
 - The ability to scrape a range of days.
 - Storage of game / event information.
 - The ability to remember where the scraper left off, so it can know which games it has already scraped, and which it needs to scrape.
+- Validation of data being inserted.
 - A command line interface that is cron-able.
 - Anything else?
 
