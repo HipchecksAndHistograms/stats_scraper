@@ -13,7 +13,7 @@ module StatsScraper
     def games
       games ||= begin
         links = score_box.xpath("//div[contains(@class, 'gcLinks')]/div[2]/a[1]/@href").map(&:value)
-        ids = links.map { |link| CGI.parse(URI.parse(link).query)['id'].first }
+        links.map { |link| CGI.parse(URI.parse(link).query)['id'].first }.map { |id| Game.new(id, @date) }
       end
     end
 

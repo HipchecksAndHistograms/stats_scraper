@@ -1,5 +1,8 @@
 module StatsScraper
   class Game
+    attr_reader :id,
+                :date
+
     include HTTParty
     base_uri 'http://www.nhl.com/scores/htmlreports/'
 

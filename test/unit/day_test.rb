@@ -25,7 +25,7 @@ class DayTest < Minitest::Test
     ]
 
     VCR.use_cassette('test_day_with_games_returns_properly') do
-      assert_equal expected, @day.games
+      assert_equal expected, @day.games.map(&:id)
     end
   end
 end
