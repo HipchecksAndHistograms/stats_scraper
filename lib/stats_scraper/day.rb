@@ -20,16 +20,13 @@ module StatsScraper
     private
 
     def score_box
-      @score_box ||= begin
-        selected = page.xpath("//*[@id=\"scoresBody\"]")
-        raise InvalidResponse if selected.length != 1
-
-        selected.first
-      end
+      selected = page.xpath("//*[@id=\"scoresBody\"]")
+      raise InvalidResponse if selected.length != 1
+      selected.first
     end
 
     def page
-      @page ||= Nokogiri::HTML(self.class.get("", @options))
+      Nokogiri::HTML(self.class.get("", @options))
     end
 
     def formatted_date
