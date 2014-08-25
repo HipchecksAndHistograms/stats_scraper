@@ -6,7 +6,7 @@ stats_scraper
 NHL.com Statistics Scraper. WIP.
 
 ### Intro
-The goal of this project is to be able to scrape an NHL.com's play-by-play game sheet and insert it into a database for further analysis. This scraper will take all pertinent information from the game sheet and store it into a database. I'd love to set this up in production for my own use, but also so that those without programming experience can download this dataset and analyze it using their tool of choice.
+The goal of this project is to be able to scrape an NHL.com's play-by-play game sheet and insert it into a database for further analysis. I'd love to set this up in production for my own use, but also so that those without programming experience can download this dataset and analyze it using their tool of choice.
 
 For now, there are no plans to do any further modelling / processing of the data. However, I do plan on writing a seperate tool (or possibly extend this one) to take the scraped data, apply some transforms, and spit out new data that is easier to use in analysis tools.
 
