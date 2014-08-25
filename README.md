@@ -26,6 +26,6 @@ For now, there are no plans to do any further modelling / processing of the data
 I welcome any contributions that will make this scraper better. If you can make it easier to read or if you find a bug in my code, please create an issue or send me a PR. While performance tweaks aren't very high on my list of concerns, I also welcome PRs of those kind so long as they keep the codebase readable and resilient to structural changes in the NHL.com website.
 
 If you're sending me a PR:
-1. Fork this repo;
-2. Make commits to a feature branch; and,
-3. Send me a PR.
+- 1. Fork this repo;
+- 2. Make commits to a feature branch; and,
+- 3. Send me a PR.
