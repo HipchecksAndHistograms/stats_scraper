@@ -2,7 +2,7 @@ require 'test_helper'
 
 class DayTest < Minitest::Test
   def test_gets_game_sheet
-    @game = StatsScraper::Game.new("2013020902", Time.new(2014, 3, 1))
+    @game = StatsScraper::Game.new("2013020902", Date.new(2014, 3, 1))
 
     VCR.use_cassette('test_gets_game_sheet') do
       assert_equal 306,                   @game.events.length

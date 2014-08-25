@@ -2,7 +2,7 @@ require 'test_helper'
 
 class DayTest < Minitest::Test
   def test_day_with_no_games_returns_properly
-    @day = StatsScraper::Day.new(Time.new(2014, 8, 20))
+    @day = StatsScraper::Day.new(Date.new(2014, 8, 20))
 
     VCR.use_cassette('test_day_with_no_games_returns_properly') do
       assert_equal [], @day.games
@@ -10,7 +10,7 @@ class DayTest < Minitest::Test
   end
 
   def test_day_with_games_returns_properly
-    @day = StatsScraper::Day.new(Time.new(2014, 3, 1))
+    @day = StatsScraper::Day.new(Date.new(2014, 3, 1))
     expected = [
       "2013020902",
       "2013020903",

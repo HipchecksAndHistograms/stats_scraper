@@ -5,7 +5,7 @@ module StatsScraper
     include HTTParty
     base_uri "http://www.nhl.com/ice/scores.htm"
 
-    def initialize(date = Time.now)
+    def initialize(date = Date.today)
       @date = date
       @options = { query: { date: formatted_date }}
     end
