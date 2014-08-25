@@ -27,7 +27,7 @@ module StatsScraper
     private
 
     def parse_on_ice_table(on_ice_table)
-      on_ice_table = Nokogiri::HTML(on_ice_table.to_html).xpath("/html/body/td/table/tr/td/table").map do |player|
+      Nokogiri::HTML(on_ice_table.to_html).xpath("/html/body/td/table/tr/td/table").map do |player|
         player = Nokogiri::HTML(player.to_html)
 
         player_node = player.xpath("//td/font").first
