@@ -12,7 +12,11 @@ module StatsScraper
     end
 
     def events
-      @events ||= game_sheet.xpath("/html/body/table/tr[contains(@class, 'evenColor')]").map{ |e| Event.new(Nokogiri::HTML(e.to_html)) }
+      @events ||= begin
+        events = game_sheet.xpath("/html/body/table/tr[contains(@class, 'evenColor')]").map{ |e| Event.new(Nokogiri::HTML(e.to_html)) }
+        StatsScraper.log("Game", "Parsed #{events.length} events for game #{@id}.")
+        events
+      end
     end
 
     def visiting_team
@@ -38,7 +42,16 @@ module StatsScraper
     end
 
     def game_sheet
-      @game_sheet ||= Nokogiri::HTML(self.class.get("/#{season}/PL#{web_id}.HTM"))
+      @game_sheet ||= begin
+        StatsScraper.log("Game", "Downloading game #{@id} from day #{@date.to_s}.")
+        game_sheet = self.class.get("/#{season}/PL#{web_id}.HTM")
+
+        unless game_sheet.response.code == "200"
+          StatsScraper.log("Game", "Invalid response code #{game_sheet.response.code} for game #{@id}!")
+          raise InvalidResponse
+        end
+        Nokogiri::HTML(game_sheet)
+      end
     end
 
     def season_start_year

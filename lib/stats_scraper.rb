@@ -10,6 +10,8 @@ require 'stats_scraper/event'
 require 'stats_scraper/date_range'
 
 module StatsScraper
+  class InvalidResponse < StandardError; end
+
   def self.logger
     @logger ||= Logger.new(STDOUT)
   end
