@@ -13,7 +13,7 @@ class DateRangeTest < Minitest::Test
   def test_date_range_scrapes_days
     VCR.use_cassette('test_date_range') do
       assert_equal 12, @range.days.map(&:games).flatten.count
-      assert_equal 3173, @range.days.map(&:games).flatten.map(&:events).flatten.count
+      assert_equal 3730, @range.days.map(&:games).flatten.map(&:events).flatten.count
     end
   end
 end
