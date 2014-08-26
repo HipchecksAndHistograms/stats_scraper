@@ -13,7 +13,7 @@ module StatsScraper
 
     def events
       @events ||= begin
-        events = game_sheet.xpath("/html/body/table/tr[contains(@class, 'evenColor')]").map{ |e| Event.new(Nokogiri::HTML(e.to_html)) }
+        events = game_sheet.xpath("//tr[contains(@class, 'evenColor')]").map{ |e| Event.new(Nokogiri::HTML(e.to_html)) }
         StatsScraper.log("Game", "Parsed #{events.length} events for game #{@id}.")
         events
       end
@@ -38,7 +38,7 @@ module StatsScraper
     private
 
     def information_box
-      @information_box ||= Nokogiri::HTML(game_sheet.xpath("/html/body/table[1]/tr[1]/td/table/tr/td/table/tr").to_html)
+      @information_box ||= Nokogiri::HTML(game_sheet.xpath("//table[1]/tr[1]/td/table/tr/td/table/tr").to_html)
     end
 
     def game_sheet
