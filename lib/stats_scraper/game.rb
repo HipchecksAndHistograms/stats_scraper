@@ -50,7 +50,9 @@ module StatsScraper
           StatsScraper.log("Game", "Invalid response code #{game_sheet.response.code} for game #{@id}!")
           raise InvalidResponse
         end
-        Nokogiri::HTML(game_sheet)
+        @game_sheet = Nokogiri::HTML(game_sheet)
+        StatsScraper.log("Game", "Downloaded #{@id} - #{visiting_team} vs. #{home_team}.")
+        @game_sheet
       end
     end
 
