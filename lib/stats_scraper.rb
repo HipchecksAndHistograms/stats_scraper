@@ -9,6 +9,9 @@ require 'stats_scraper/game'
 require 'stats_scraper/event'
 require 'stats_scraper/date_range'
 
+require 'db'
+require 'scraper'
+
 module StatsScraper
   class InvalidResponse < StandardError; end
 
