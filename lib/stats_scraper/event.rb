@@ -65,7 +65,7 @@ module StatsScraper
 
         current_position = player.xpath("//tr[2]/td").text
 
-        { name: name, position: position, current_position: current_position }
+        { name: name, position: position, current_position: current_position, number: Integer(number) }
       end
     end
   end

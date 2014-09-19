@@ -42,6 +42,7 @@ module StatsScraper
         String  :name
         String  :position
         String  :current_position
+        Integer :number
       end
     end
 
