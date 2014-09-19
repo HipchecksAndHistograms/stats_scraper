@@ -47,6 +47,9 @@ module StatsScraper
       }
     end
 
+    def persist
+    end
+
     private
 
     def information_box

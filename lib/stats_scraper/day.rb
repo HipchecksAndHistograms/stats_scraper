@@ -18,24 +18,12 @@ module StatsScraper
     end
 
     def save_to_db
-      StatsScraper::DB.database.transaction do
-        StatsScraper.log("Day", "Inserting #{games.count} games for day #{@date}.")
-        games.map(&:to_hash).each do |game|
-          events = game.delete(:events)
-
-          StatsScraper.log("Day", "Inserting game #{game[:id]}.")
-          StatsScraper::DB.insert_game(game)
-          StatsScraper.log("Day", "Successfully inserted game #{game[:id]}.")
-          StatsScraper.log("Day", "Inserting #{events.count} events for game #{game[:id]}.")
-          events.each do |event|
-            players_on_ice = event.delete(:players_on_ice)
-            StatsScraper::DB.insert_event(event)
-            players_on_ice.each { |player| StatsScraper::DB.insert_player_on_ice(player) }
-          end
-          StatsScraper.log("Day", "Succesfully inserted #{events.count} events for game #{game[:id]}.")
-        end
-        StatsScraper.log("Day", "Succesfully inserted #{games.count} games for day #{@date}.")
-      end
+      StatsScraper.log("Day", "Inserting #{games.count} games for day #{@date}.")
+      persisted_games_for_date = DB.persisted_games_for_date(@date)
+      StatsScraper.log("Day", "#{persisted_games_for_date.count} games for #{@date} already persisted.") if persisted_games_for_date.count > 0
+      games_to_insert = games.select { |game| !persisted_games_for_date.include?(game.id) }
+      games_to_insert.each { |game| game.persist }
+      StatsScraper.log("Day", "Succesfully inserted #{games_to_insert.count} games for day #{@date}.")
     end
 
     private

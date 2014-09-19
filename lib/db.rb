@@ -57,5 +57,11 @@ module StatsScraper
     def self.insert_player_on_ice(player_on_ice)
       database[:players_on_ice].insert(player_on_ice)
     end
+
+    def self.persisted_game_ids_for_date(date)
+      ids = database[:games].select(:id).where(date: date).to_a.map { |g| g[:id] }
+      StatsScraper.log("DB", "Found #{ids.count} persisted games for date #{date}.")
+      ids
+    end
   end
 end
