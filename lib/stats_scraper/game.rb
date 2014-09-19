@@ -73,7 +73,7 @@ module StatsScraper
     end
 
     def web_id
-      @id[4..-1]
+      @id.to_s[4..-1]
     end
 
     def season
