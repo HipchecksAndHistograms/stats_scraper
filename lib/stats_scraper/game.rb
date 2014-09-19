@@ -50,7 +50,7 @@ module StatsScraper
     private
 
     def information_box
-      @information_box ||= Nokogiri::HTML(game_sheet.xpath("//table[1]/tr[1]/td/table/tr/td/table/tr").to_html)
+      @information_box ||= game_sheet.xpath("//table[1]/tr[1]/td/table/tr/td/table/tr")
     end
 
     def game_sheet
@@ -81,11 +81,11 @@ module StatsScraper
     end
 
     def team_name(side)
-      information_box.xpath("//table[@id='#{side}']/tr[3]/td").children.first.text
+      information_box.xpath(".//table[@id='#{side}']/tr[3]/td").children.first.text
     end
 
     def attendance_row
-      @attendance_row ||= information_box.xpath("//table[@id='GameInfo']/tr[5]/td").text.match(/Attendance ([0-9,]+).at.(.+)/).captures
+      @attendance_row ||= information_box.xpath(".//table[@id='GameInfo']/tr[5]/td").text.match(/Attendance ([0-9,]+).at.(.+)/).captures
     end
   end
 end
