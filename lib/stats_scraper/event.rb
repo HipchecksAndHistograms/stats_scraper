@@ -13,17 +13,17 @@ module StatsScraper
     def initialize(game_id, event_node)
       @game_id = game_id
 
-      @event_number      = Integer(event_node.xpath("/html/body/tr/td[1]").text)
-      @period            = Integer(event_node.xpath("/html/body/tr/td[2]").text)
-      @strength          = event_node.xpath("/html/body/tr/td[3]").text
-      time_box           = event_node.xpath("/html/body/tr/td[4]").children.map(&:text)
+      @event_number      = Integer(event_node.xpath("./td[1]").text)
+      @period            = Integer(event_node.xpath("./td[2]").text)
+      @strength          = event_node.xpath("./td[3]").text
+      time_box           = event_node.xpath("./td[4]").children.map(&:text)
       @time_elapsed      = time_box.first
       @time_left         = time_box.last
-      @event_name        = event_node.xpath("/html/body/tr/td[5]").text
-      @event_description = event_node.xpath("/html/body/tr/td[6]").text
+      @event_name        = event_node.xpath("./td[5]").text
+      @event_description = event_node.xpath("./td[6]").text
 
-      @visitor_on_ice = parse_on_ice_table(event_node.xpath("/html/body/tr/td[7]"))
-      @home_on_ice    = parse_on_ice_table(event_node.xpath("/html/body/tr/td[8]"))
+      @visitor_on_ice = parse_on_ice_table(event_node.xpath("./td[7]"))
+      @home_on_ice    = parse_on_ice_table(event_node.xpath("./td[8]"))
     end
 
     def to_hash
