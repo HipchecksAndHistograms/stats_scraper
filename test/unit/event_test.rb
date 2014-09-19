@@ -83,21 +83,19 @@ class EventTest < Minitest::Test
       time_left:         "20:00",
       event_name:        "PSTR",
       event_description: "Period Start- Local time: 1:09 EST",
-      visitor_on_ice: [
-        { name: "ERIC FEHR", position: "Right Wing", current_position: "R", game_id: "2013020902", event_number: 1, side: :visitor },
-        { name: "JOEL WARD", position: "Right Wing", current_position: "R", game_id: "2013020902", event_number: 1, side: :visitor },
-        { name: "JASON CHIMERA", position: "Left Wing", current_position: "L", game_id: "2013020902", event_number: 1, side: :visitor },
-        { name: "MIKE GREEN", position: "Defense", current_position: "D", game_id: "2013020902", event_number: 1, side: :visitor },
-        { name: "DMITRY ORLOV", position: "Defense", current_position: "D", game_id: "2013020902", event_number: 1, side: :visitor },
-        { name: "BRADEN HOLTBY", position: "Goalie", current_position: "G", game_id: "2013020902", event_number: 1, side: :visitor }
-      ],
-      home_on_ice: [
-        { name: "CHRIS KELLY", position: "Center", current_position: "C", game_id: "2013020902", event_number: 1, side: :home },
-        { name: "CARL SODERBERG", position: "Center", current_position: "C", game_id: "2013020902", event_number: 1, side: :home },
-        { name: "LOUI ERIKSSON", position: "Left Wing", current_position: "L", game_id: "2013020902", event_number: 1, side: :home },
-        { name: "MATT BARTKOWSKI", position: "Defense", current_position: "D", game_id: "2013020902", event_number: 1, side: :home },
-        { name: "JOHNNY BOYCHUK", position: "Defense", current_position: "D", game_id: "2013020902", event_number: 1, side: :home },
-        { name: "TUUKKA RASK", position: "Goalie", current_position: "G", game_id: "2013020902", event_number: 1, side: :home }
+      players_on_ice: [
+        { name: "ERIC FEHR", position: "Right Wing", current_position: "R", game_id: "2013020902", event_number: 1, side: 'visitor' },
+        { name: "JOEL WARD", position: "Right Wing", current_position: "R", game_id: "2013020902", event_number: 1, side: 'visitor' },
+        { name: "JASON CHIMERA", position: "Left Wing", current_position: "L", game_id: "2013020902", event_number: 1, side: 'visitor' },
+        { name: "MIKE GREEN", position: "Defense", current_position: "D", game_id: "2013020902", event_number: 1, side: 'visitor' },
+        { name: "DMITRY ORLOV", position: "Defense", current_position: "D", game_id: "2013020902", event_number: 1, side: 'visitor' },
+        { name: "BRADEN HOLTBY", position: "Goalie", current_position: "G", game_id: "2013020902", event_number: 1, side: 'visitor' },
+        { name: "CHRIS KELLY", position: "Center", current_position: "C", game_id: "2013020902", event_number: 1, side: 'home' },
+        { name: "CARL SODERBERG", position: "Center", current_position: "C", game_id: "2013020902", event_number: 1, side: 'home' },
+        { name: "LOUI ERIKSSON", position: "Left Wing", current_position: "L", game_id: "2013020902", event_number: 1, side: 'home' },
+        { name: "MATT BARTKOWSKI", position: "Defense", current_position: "D", game_id: "2013020902", event_number: 1, side: 'home' },
+        { name: "JOHNNY BOYCHUK", position: "Defense", current_position: "D", game_id: "2013020902", event_number: 1, side: 'home' },
+        { name: "TUUKKA RASK", position: "Goalie", current_position: "G", game_id: "2013020902", event_number: 1, side: 'home' }
       ]
     }
   end

@@ -28,4 +28,10 @@ class DayTest < Minitest::Test
       assert_equal expected, @day.games.map(&:id)
     end
   end
+
+  # def test_day_daves_to_db_correctly
+  #   VCR.use_cassette('test_day_with_games_returns_properly') do
+      
+  #   end
+  # end
 end
