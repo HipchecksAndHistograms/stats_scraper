@@ -56,14 +56,12 @@ module StatsScraper
     end
 
     def parse_on_ice_table(on_ice_table)
-      Nokogiri::HTML(on_ice_table.to_html).xpath("/html/body/td/table/tr/td/table").map do |player|
-        player = Nokogiri::HTML(player.to_html)
-
-        player_node = player.xpath("//td/font").first
+      on_ice_table.xpath(".//td/table").map do |player|
+        player_node = player.at_xpath(".//font")
         position, name = player_node.attributes["title"].value.split(" - ")
         number = player_node.text
 
-        current_position = player.xpath("//tr[2]/td").text
+        current_position = player.xpath(".//tr[2]/td").text
 
         { name: name, position: position, current_position: current_position, number: Integer(number) }
       end
