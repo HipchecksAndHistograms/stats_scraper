@@ -40,6 +40,9 @@ module StatsScraper
       }
     end
 
+    def persist
+    end
+
     private
 
     def players_on_ice

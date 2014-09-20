@@ -5,6 +5,7 @@ module StatsScraper
   module DB
     def self.database
       if @database.nil? || !@database.test_connection
+        StatsScraper.log("DB", "Creating new database connection.")
         @database = Sequel.mysql("stats_scraper_#{StatsScraper.environment}", user: 'root')
       else
         @database

@@ -35,6 +35,16 @@ module StatsScraper
       attendance_row[1]
     end
 
+    def persist
+      StatsScraper.log("Game", "Persisting #{@id}.")
+      DB.database.transaction do
+        events.each(&:persist)
+        DB.insert_game(to_hash)
+      end
+    end
+
+    private
+
     def to_hash
       {
         id:            @id,
@@ -42,15 +52,9 @@ module StatsScraper
         venue:         venue,
         attendance:    attendance,
         home_team:     home_team,
-        visiting_team: visiting_team,
-        events:        events.map(&:to_hash)
+        visiting_team: visiting_team
       }
     end
-
-    def persist
-    end
-
-    private
 
     def information_box
       @information_box ||= game_sheet.xpath("//table[1]/tr[1]/td/table/tr/td/table/tr")
