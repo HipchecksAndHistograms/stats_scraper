@@ -64,5 +64,9 @@ module StatsScraper
       StatsScraper.log("DB", "Found #{ids.count} persisted games for date #{date}.")
       ids
     end
+
+    def self.last_scraped_day
+      database[:games].select(:date).order('date DESC').limit(1).first[:date]
+    end
   end
 end

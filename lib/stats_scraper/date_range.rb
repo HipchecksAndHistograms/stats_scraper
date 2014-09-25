@@ -12,5 +12,9 @@ module StatsScraper
 
       StatsScraper.log('DateRange', "Built DateRange of length #{@days.length}.")
     end
+
+    def persist_days
+      @days.each { |day| day.save_to_db }
+    end
   end
 end
