@@ -69,7 +69,7 @@ module StatsScraper
     end
 
     def self.last_scraped_day
-      database[:games].select(:date).order('date DESC').limit(1).first[:date]
+      database[:games].select(:date).order(Sequel.desc(:date)).limit(1).first[:date]
     end
   end
 end
