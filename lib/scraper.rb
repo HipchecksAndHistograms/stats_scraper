@@ -1,7 +1,7 @@
 module StatsScraper
   module Scraper
     def self.run
-      start_date = DB.last_scraped_day || Date.new(2009, 9, 15)
+      start_date = DB.last_scraped_day || Date.new(2010, 9, 21)
       end_date = start_date + 7
 
       if end_date > Date.today
