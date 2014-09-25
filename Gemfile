@@ -6,6 +6,7 @@ gem 'httparty', '~> 0.13.1'
 gem 'nokogiri', '~> 1.6.3.1'
 
 gem 'sequel', '~> 4.14.0'
+gem 'pg', '~> 0.17.1'
 
 group :test do
   gem 'minitest', '~> 5.4.0'
