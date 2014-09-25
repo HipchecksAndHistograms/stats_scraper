@@ -35,24 +35,27 @@ module StatsScraper
         time_elapsed:      @time_elapsed,
         time_left:         @time_left,
         event_name:        @event_name,
-        event_description: @event_description,
-        players_on_ice:    players_on_ice
+        event_description: @event_description
       }
     end
 
     def persist
+      players_on_ice.each { |player| DB.insert_player_on_ice(player) }
+      DB.insert_event(to_hash)
+    end
+
+    def players_on_ice
+      @players_on_ice ||= begin
+        players = [
+          @visitor_on_ice.map { |player| merge_game_and_event_info(player, :visitor) },
+          @home_on_ice.map { |player| merge_game_and_event_info(player, :home) }
+        ]
+
+        players.flatten
+      end
     end
 
     private
-
-    def players_on_ice
-      players = [
-        @visitor_on_ice.map { |player| merge_game_and_event_info(player, :visitor) },
-        @home_on_ice.map { |player| merge_game_and_event_info(player, :home) }
-      ]
-
-      players.flatten
-    end
 
     def merge_game_and_event_info(player, side)
       player.merge(game_id: @game_id, event_number: @event_number, side: side.to_s)

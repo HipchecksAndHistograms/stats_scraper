@@ -68,6 +68,7 @@ class EventTest < Minitest::Test
       assert @game.events.map(&:event_description).none? { |t| t.nil? }
 
       assert_equal expected_event, @game.events.first.to_hash
+      assert_equal expected_players_on_ice, @game.events.first.players_on_ice
     end
   end
 
@@ -82,21 +83,24 @@ class EventTest < Minitest::Test
       time_elapsed:      "0:00",
       time_left:         "20:00",
       event_name:        "PSTR",
-      event_description: "Period Start- Local time: 1:09 EST",
-      players_on_ice: [
-        { name: "ERIC FEHR", position: "Right Wing", current_position: "R", game_id: "2013020902", event_number: 1, side: 'visitor', number: 16 },
-        { name: "JOEL WARD", position: "Right Wing", current_position: "R", game_id: "2013020902", event_number: 1, side: 'visitor', number: 42 },
-        { name: "JASON CHIMERA", position: "Left Wing", current_position: "L", game_id: "2013020902", event_number: 1, side: 'visitor', number: 25 },
-        { name: "MIKE GREEN", position: "Defense", current_position: "D", game_id: "2013020902", event_number: 1, side: 'visitor', number: 52 },
-        { name: "DMITRY ORLOV", position: "Defense", current_position: "D", game_id: "2013020902", event_number: 1, side: 'visitor', number: 81 },
-        { name: "BRADEN HOLTBY", position: "Goalie", current_position: "G", game_id: "2013020902", event_number: 1, side: 'visitor', number: 70 },
-        { name: "CHRIS KELLY", position: "Center", current_position: "C", game_id: "2013020902", event_number: 1, side: 'home', number: 23 },
-        { name: "CARL SODERBERG", position: "Center", current_position: "C", game_id: "2013020902", event_number: 1, side: 'home', number: 34 },
-        { name: "LOUI ERIKSSON", position: "Left Wing", current_position: "L", game_id: "2013020902", event_number: 1, side: 'home', number: 21 },
-        { name: "MATT BARTKOWSKI", position: "Defense", current_position: "D", game_id: "2013020902", event_number: 1, side: 'home', number: 43 },
-        { name: "JOHNNY BOYCHUK", position: "Defense", current_position: "D", game_id: "2013020902", event_number: 1, side: 'home', number: 55 },
-        { name: "TUUKKA RASK", position: "Goalie", current_position: "G", game_id: "2013020902", event_number: 1, side: 'home', number: 40 }
-      ]
+      event_description: "Period Start- Local time: 1:09 EST"
     }
+  end
+
+  def expected_players_on_ice
+    [
+      { name: "ERIC FEHR", position: "Right Wing", current_position: "R", game_id: "2013020902", event_number: 1, side: 'visitor', number: 16 },
+      { name: "JOEL WARD", position: "Right Wing", current_position: "R", game_id: "2013020902", event_number: 1, side: 'visitor', number: 42 },
+      { name: "JASON CHIMERA", position: "Left Wing", current_position: "L", game_id: "2013020902", event_number: 1, side: 'visitor', number: 25 },
+      { name: "MIKE GREEN", position: "Defense", current_position: "D", game_id: "2013020902", event_number: 1, side: 'visitor', number: 52 },
+      { name: "DMITRY ORLOV", position: "Defense", current_position: "D", game_id: "2013020902", event_number: 1, side: 'visitor', number: 81 },
+      { name: "BRADEN HOLTBY", position: "Goalie", current_position: "G", game_id: "2013020902", event_number: 1, side: 'visitor', number: 70 },
+      { name: "CHRIS KELLY", position: "Center", current_position: "C", game_id: "2013020902", event_number: 1, side: 'home', number: 23 },
+      { name: "CARL SODERBERG", position: "Center", current_position: "C", game_id: "2013020902", event_number: 1, side: 'home', number: 34 },
+      { name: "LOUI ERIKSSON", position: "Left Wing", current_position: "L", game_id: "2013020902", event_number: 1, side: 'home', number: 21 },
+      { name: "MATT BARTKOWSKI", position: "Defense", current_position: "D", game_id: "2013020902", event_number: 1, side: 'home', number: 43 },
+      { name: "JOHNNY BOYCHUK", position: "Defense", current_position: "D", game_id: "2013020902", event_number: 1, side: 'home', number: 55 },
+      { name: "TUUKKA RASK", position: "Goalie", current_position: "G", game_id: "2013020902", event_number: 1, side: 'home', number: 40 }
+    ]
   end
 end

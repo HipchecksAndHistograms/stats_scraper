@@ -33,7 +33,7 @@ class DayTest < Minitest::Test
     VCR.use_cassette('test_day_with_games_returns_properly') do
       date = Date.new(2014, 3, 1)
       @day = StatsScraper::Day.new(date)
-      StatsScraper::DB.expects(:persisted_games_for_date).with(date).returns([]).once
+      StatsScraper::DB.expects(:persisted_game_ids_for_date).with(date).returns([]).once
       @day.games.each { |game| game.expects(:persist).once }
 
       @day.save_to_db
@@ -45,7 +45,7 @@ class DayTest < Minitest::Test
       date = Date.new(2014, 3, 1)
       persisted_ids = [ 2013020902, 2013020906 ]
       @day = StatsScraper::Day.new(date)
-      StatsScraper::DB.expects(:persisted_games_for_date).with(date).returns(persisted_ids).once
+      StatsScraper::DB.expects(:persisted_game_ids_for_date).with(date).returns(persisted_ids).once
 
       @day.games.each do |game|
         if persisted_ids.include?(game.id)

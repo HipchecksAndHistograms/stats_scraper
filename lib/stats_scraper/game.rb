@@ -36,11 +36,11 @@ module StatsScraper
     end
 
     def persist
-      StatsScraper.log("Game", "Persisting #{@id}.")
-      DB.database.transaction do
-        events.each(&:persist)
-        DB.insert_game(to_hash)
-      end
+      StatsScraper.log("Game", "Persisting game #{@id}.")
+      events.each(&:persist)
+      StatsScraper.log("Game", "Persisted #{events.count} events for game #{@id}.")
+      DB.insert_game(to_hash)
+      StatsScraper.log("Game", "Persisted game #{id}.")
     end
 
     private

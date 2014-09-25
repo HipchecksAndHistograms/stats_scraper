@@ -19,7 +19,7 @@ module StatsScraper
 
     def save_to_db
       StatsScraper.log("Day", "Inserting #{games.count} games for day #{@date}.")
-      persisted_games_for_date = DB.persisted_games_for_date(@date)
+      persisted_games_for_date = DB.persisted_game_ids_for_date(@date)
       StatsScraper.log("Day", "#{persisted_games_for_date.count} games for #{@date} already persisted.") if persisted_games_for_date.count > 0
       games_to_insert = games.select { |game| !persisted_games_for_date.include?(game.id) }
       games_to_insert.each { |game| game.persist }
