@@ -41,4 +41,10 @@ module StatsScraper
   def self.test?
     self.environment == 'test'
   end
+
+  def self.config
+    @config ||= begin
+      YAML.load_file("config/config.yml")[environment]
+    end
+  end
 end

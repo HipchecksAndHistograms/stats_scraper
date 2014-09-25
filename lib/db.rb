@@ -1,12 +1,15 @@
 require 'sequel'
-require 'mysql'
 
 module StatsScraper
   module DB
     def self.database
       if @database.nil? || !@database.test_connection
         StatsScraper.log("DB", "Creating new database connection.")
-        @database = Sequel.mysql("stats_scraper_#{StatsScraper.environment}", user: 'root')
+        @database = Sequel.postgres("stats_scraper_#{StatsScraper.environment}",
+                                    user:     StatsScraper.config['database_username'],
+                                    password: StatsScraper.config['database_password'],
+                                    host:     StatsScraper.config['database_host'],
+                                    port:     StatsScraper.config['database_port'])
       else
         @database
       end
