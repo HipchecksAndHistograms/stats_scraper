@@ -6,7 +6,7 @@ module StatsScraper
       if @database.nil? || !@database.test_connection
         StatsScraper.log("DB", "Creating new database connection.")
         @database = Sequel.postgres("stats_scraper_#{StatsScraper.environment}",
-                                    user:     StatsScraper.config['database_username'],
+                                    user:     StatsScraper.config['database_user'],
                                     password: StatsScraper.config['database_password'],
                                     host:     StatsScraper.config['database_host'],
                                     port:     StatsScraper.config['database_port'])
