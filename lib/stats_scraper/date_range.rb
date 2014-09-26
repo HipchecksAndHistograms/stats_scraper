@@ -6,7 +6,7 @@ module StatsScraper
       @days = []
       current_date = start_date
       while current_date <= end_date
-        @days << Day.new(current_date)
+        @days << Scraper::Day.new(current_date)
         current_date += 1
       end
 

@@ -4,9 +4,9 @@ require 'logger'
 require 'httparty'
 require 'nokogiri'
 
-require 'stats_scraper/day'
-require 'stats_scraper/game'
-require 'stats_scraper/event'
+require 'stats_scraper/scraper/day'
+require 'stats_scraper/scraper/game'
+require 'stats_scraper/scraper/event'
 require 'stats_scraper/date_range'
 
 require 'db'

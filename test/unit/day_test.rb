@@ -2,7 +2,7 @@ require 'test_helper'
 
 class DayTest < Minitest::Test
   def test_day_with_no_games_returns_properly
-    @day = StatsScraper::Day.new(Date.new(2014, 8, 20))
+    @day = StatsScraper::Scraper::Day.new(Date.new(2014, 8, 20))
 
     VCR.use_cassette('test_day_with_no_games_returns_properly') do
       assert_equal [], @day.games
@@ -10,7 +10,7 @@ class DayTest < Minitest::Test
   end
 
   def test_day_with_games_returns_properly
-    @day = StatsScraper::Day.new(Date.new(2014, 3, 1))
+    @day = StatsScraper::Scraper::Day.new(Date.new(2014, 3, 1))
     expected = [
       2013020902,
       2013020903,
@@ -32,7 +32,7 @@ class DayTest < Minitest::Test
   def test_day_with_unpersisted_games_inserts_correctly
     VCR.use_cassette('test_day_with_games_returns_properly') do
       date = Date.new(2014, 3, 1)
-      @day = StatsScraper::Day.new(date)
+      @day = StatsScraper::Scraper::Day.new(date)
       StatsScraper::DB.expects(:persisted_game_ids_for_date).with(date).returns([]).once
       @day.games.each { |game| game.expects(:persist).once }
 
@@ -44,7 +44,7 @@ class DayTest < Minitest::Test
     VCR.use_cassette('test_day_with_games_returns_properly') do
       date = Date.new(2014, 3, 1)
       persisted_ids = [ 2013020902, 2013020906 ]
-      @day = StatsScraper::Day.new(date)
+      @day = StatsScraper::Scraper::Day.new(date)
       StatsScraper::DB.expects(:persisted_game_ids_for_date).with(date).returns(persisted_ids).once
 
       @day.games.each do |game|
