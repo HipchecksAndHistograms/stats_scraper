@@ -64,8 +64,9 @@ module StatsScraper
 
       def game_sheet
         @game_sheet ||= begin
-          StatsScraper::Logger.log("Game", "Downloading game #{@id} from day #{@date.to_s}.")
-          game_sheet = self.class.get("/#{season}/PL#{web_id}.HTM")
+          get_url = "/#{season}/PL#{web_id}.HTM"
+          StatsScraper::Logger.log("Game", "Downloading game #{@id} from day #{@date.to_s}. URL: #{self.class.base_uri}#{get_url}")
+          game_sheet = self.class.get(get_url)
 
           unless game_sheet.response.code == "200"
             StatsScraper::Logger.log("Game", "Invalid response code #{game_sheet.response.code} for game #{@id}!")
