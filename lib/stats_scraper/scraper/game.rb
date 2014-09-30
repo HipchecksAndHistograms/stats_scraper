@@ -29,7 +29,8 @@ module StatsScraper
       end
 
       def attendance
-        Integer(attendance_row[0].gsub(',', ''))
+        attendance = attendance_row[0].gsub(',', '')
+        attendance.empty? ? nil : Integer(attendance)
       end
 
       def venue
@@ -93,7 +94,7 @@ module StatsScraper
       end
 
       def attendance_row
-        @attendance_row ||= information_box.xpath(".//table[@id='GameInfo']/tr[5]/td").text.match(/Attendance ([0-9,]+).at.(.+)/).captures
+        @attendance_row ||= information_box.xpath(".//table[@id='GameInfo']/tr[5]/td").text.match(/Attendance ([0-9,]*).at.(.+)/).captures
       end
     end
   end

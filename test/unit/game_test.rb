@@ -33,4 +33,16 @@ class DayTest < Minitest::Test
       @game.persist
     end
   end
+
+  def test_game_with_no_attendance_parses_correctly
+    @game = StatsScraper::Scraper::Game.new(2010010006, Date.new(2010, 9, 21))
+
+    VCR.use_cassette('test_game_with_no_attendance_parses_correctly') do
+      assert_equal 328,                   @game.events.length
+      assert_equal "OTTAWA SENATORS",     @game.visiting_team
+      assert_equal "TORONTO MAPLE LEAFS", @game.home_team
+      assert_equal nil,                   @game.attendance
+      assert_equal "Air Canada Centre",   @game.venue
+    end
+  end
 end
