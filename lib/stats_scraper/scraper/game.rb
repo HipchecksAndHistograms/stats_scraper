@@ -15,7 +15,7 @@ module StatsScraper
       def events
         @events ||= begin
           events = game_sheet.xpath("//tr[contains(@class, 'evenColor')]").map{ |event| Event.new(@id, event) }
-          StatsScraper.log("Game", "Parsed #{events.length} events for game #{@id}.")
+          StatsScraper::Logger.log("Game", "Parsed #{events.length} events for game #{@id}.")
           events
         end
       end
@@ -37,11 +37,11 @@ module StatsScraper
       end
 
       def persist
-        StatsScraper.log("Game", "Persisting game #{@id}.")
+        StatsScraper::Logger.log("Game", "Persisting game #{@id}.")
         events.each(&:persist)
-        StatsScraper.log("Game", "Persisted #{events.count} events for game #{@id}.")
+        StatsScraper::Logger.log("Game", "Persisted #{events.count} events for game #{@id}.")
         DB.insert_game(to_hash)
-        StatsScraper.log("Game", "Persisted game #{id}.")
+        StatsScraper::Logger.log("Game", "Persisted game #{id}.")
       end
 
       private
@@ -63,15 +63,15 @@ module StatsScraper
 
       def game_sheet
         @game_sheet ||= begin
-          StatsScraper.log("Game", "Downloading game #{@id} from day #{@date.to_s}.")
+          StatsScraper::Logger.log("Game", "Downloading game #{@id} from day #{@date.to_s}.")
           game_sheet = self.class.get("/#{season}/PL#{web_id}.HTM")
 
           unless game_sheet.response.code == "200"
-            StatsScraper.log("Game", "Invalid response code #{game_sheet.response.code} for game #{@id}!")
+            StatsScraper::Logger.log("Game", "Invalid response code #{game_sheet.response.code} for game #{@id}!")
             raise InvalidResponse
           end
           @game_sheet = Nokogiri::HTML(game_sheet)
-          StatsScraper.log("Game", "Downloaded #{@id} - #{visiting_team} vs. #{home_team}.")
+          StatsScraper::Logger.log("Game", "Downloaded #{@id} - #{visiting_team} vs. #{home_team}.")
           @game_sheet
         end
       end

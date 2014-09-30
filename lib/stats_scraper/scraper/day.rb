@@ -5,7 +5,7 @@ module StatsScraper
       base_uri "http://www.nhl.com/ice/scores.htm"
 
       def initialize(date = Date.today)
-        StatsScraper.log("Day", "Creating day for #{date}")
+        StatsScraper::Logger.log("Day", "Creating day for #{date}")
         @date = date
         @options = { query: { date: formatted_date }}
       end
@@ -13,18 +13,18 @@ module StatsScraper
       def games
         @games ||= begin
           links = score_box.xpath("//div[contains(@class, 'gcLinks')]/div[2]/a[1]/@href").map(&:value)
-          StatsScraper.log("Day", "Found #{links.length} games on day #{@date}.")
+          StatsScraper::Logger.log("Day", "Found #{links.length} games on day #{@date}.")
           links.map { |link| CGI.parse(URI.parse(link).query)['id'].first }.map { |id| Game.new(Integer(id), @date) }
         end
       end
 
       def save_to_db
-        StatsScraper.log("Day", "Inserting #{games.count} games for day #{@date}.")
+        StatsScraper::Logger.log("Day", "Inserting #{games.count} games for day #{@date}.")
         persisted_games_for_date = DB.persisted_game_ids_for_date(@date)
-        StatsScraper.log("Day", "#{persisted_games_for_date.count} games for #{@date} already persisted.") if persisted_games_for_date.count > 0
+        StatsScraper::Logger.log("Day", "#{persisted_games_for_date.count} games for #{@date} already persisted.") if persisted_games_for_date.count > 0
         games_to_insert = games.select { |game| !persisted_games_for_date.include?(game.id) }
         games_to_insert.each { |game| game.persist }
-        StatsScraper.log("Day", "Succesfully inserted #{games_to_insert.count} games for day #{@date}.")
+        StatsScraper::Logger.log("Day", "Succesfully inserted #{games_to_insert.count} games for day #{@date}.")
       end
 
       private
@@ -36,11 +36,11 @@ module StatsScraper
       end
 
       def page
-        StatsScraper.log("Day", "Downloading games for #{@date}.")
+        StatsScraper::Logger.log("Day", "Downloading games for #{@date}.")
         page = self.class.get("", @options)
 
         unless page.response.code == "200"
-          StatsScraper.log("Day", "Invalid response code #{page.response.code} for #{@date}!")
+          StatsScraper::Logger.log("Day", "Invalid response code #{page.response.code} for #{@date}!")
           raise InvalidResponse
         end
         Nokogiri::HTML(page)

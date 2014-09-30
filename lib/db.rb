@@ -4,7 +4,7 @@ module StatsScraper
   module DB
     def self.database
       if @database.nil? || !@database.test_connection
-        StatsScraper.log("DB", "Creating new database connection.")
+        StatsScraper::Logger.log("DB", "Creating new database connection.")
         @database = Sequel.postgres("stats_scraper_#{StatsScraper.environment}",
                                     user:     StatsScraper.config['database_user'],
                                     password: StatsScraper.config['database_password'],
@@ -64,7 +64,7 @@ module StatsScraper
 
     def self.persisted_game_ids_for_date(date)
       ids = database[:games].select(:id).where(date: date).to_a.map { |g| g[:id] }
-      StatsScraper.log("DB", "Found #{ids.count} persisted games for date #{date}.")
+      StatsScraper::Logger.log("DB", "Found #{ids.count} persisted games for date #{date}.")
       ids
     end
 

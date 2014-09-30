@@ -1,5 +1,5 @@
 require 'date'
-require 'logger'
+require 'stats_scraper/logger'
 
 require 'httparty'
 require 'nokogiri'
@@ -14,14 +14,6 @@ require 'scraper'
 
 module StatsScraper
   class InvalidResponse < StandardError; end
-
-  def self.logger
-    @logger ||= Logger.new(STDOUT)
-  end
-
-  def self.log(progname, message)
-    self.logger.add(Logger::INFO, message, progname) unless self.test?
-  end
 
   def self.environment(env = :get_env)
     if env == :get_env

@@ -5,10 +5,10 @@ module StatsScraper
       end_date = start_date + 7
 
       if end_date > Date.today
-        StatsScraper.log("Scraper", "Scraping not required. Exiting.")
+        StatsScraper::Logger.log("Scraper", "Scraping not required. Exiting.")
       else
-        StatsScraper.log("Scraper", "Beginning scraping.")
-        StatsScraper.log("Scraper", "#{(Date.today - start_date).to_i} days behind.")
+        StatsScraper::Logger.log("Scraper", "Beginning scraping.")
+        StatsScraper::Logger.log("Scraper", "#{(Date.today - start_date).to_i} days behind.")
         range = DateRange.new(start_date, end_date)
         range.persist_days
       end

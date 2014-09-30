@@ -10,7 +10,7 @@ module StatsScraper
         current_date += 1
       end
 
-      StatsScraper.log('DateRange', "Built DateRange of length #{@days.length}.")
+      StatsScraper::Logger.log('DateRange', "Built DateRange of length #{@days.length}.")
     end
 
     def persist_days
