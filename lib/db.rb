@@ -65,8 +65,8 @@ module StatsScraper
       database[:events].multi_insert(events)
     end
 
-    def self.insert_player_on_ice(player_on_ice)
-      database[:players_on_ice].insert(player_on_ice)
+    def self.insert_players_on_ice(players_on_ice)
+      database[:players_on_ice].multi_insert(players_on_ice)
     end
 
     def self.insert_anomaly(id, type, description)
