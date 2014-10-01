@@ -53,6 +53,7 @@ module StatsScraper
           anomaly = "Unable to persist game #{@id}: #{e}"
           StatsScraper::Logger.log("Game", anomaly)
           print e.backtrace.join("\n")
+          print "\n"
           DB.remove_game_from_db(@id)
           DB.insert_anomaly(self, anomaly)
         end
