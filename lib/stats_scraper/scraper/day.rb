@@ -12,9 +12,11 @@ module StatsScraper
 
       def games
         @games ||= begin
-          links = score_box.xpath("//div[contains(@class, 'gcLinks')]/div[2]/a[1]/@href").map(&:value)
+          links = page.xpath(".//div[contains(@class, 'gcLinks')]/div[2]/a[1]/@href").map(&:value)
           StatsScraper::Logger.log("Day", "Found #{links.length} games on day #{@date}.")
-          links.map { |link| CGI.parse(URI.parse(link).query)['id'].first }.map { |id| Game.new(Integer(id), @date) }
+          links = links.map { |link| Integer(CGI.parse(URI.parse(link).query)['id'].first) }
+          StatsScraper::Logger.log("Day", "Creating games for each of #{links.join(',')}.")
+          links.map { |id| Game.new(id, @date) }
         end
       end
 
@@ -29,22 +31,18 @@ module StatsScraper
 
       private
 
-      def score_box
-        selected = page.xpath("//*[@id=\"scoresBody\"]")
-        raise InvalidResponse if selected.length != 1
-        selected.first
-      end
-
       def page
-        StatsScraper::Logger.log("Day", "Downloading games for #{@date}.")
-        page = self.class.get("", @options)
+        @page ||= begin
+          StatsScraper::Logger.log("Day", "Downloading games for #{@date}.")
+          page = self.class.get("", @options)
 
-        unless page.response.code == "200"
-          StatsScraper::Logger.log("Day", "Invalid response code #{page.response.code} for #{@date}!")
-          raise InvalidResponse
+          unless page.response.code == "200"
+            StatsScraper::Logger.log("Day", "Invalid response code #{page.response.code} for #{@date}!")
+            raise InvalidResponse
+          end
+          StatsScraper::Logger.log("Day", "Downloaded games for #{@date}. URL: #{page.request.last_uri.to_s}")
+          Nokogiri::HTML(page)
         end
-        StatsScraper::Logger.log("Day", "Downloaded games for #{@date}. URL: #{page.request.last_uri.to_s}")
-        Nokogiri::HTML(page)
       end
 
       def formatted_date
