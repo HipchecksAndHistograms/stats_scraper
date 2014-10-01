@@ -30,7 +30,7 @@ class DayTest < Minitest::Test
   end
 
   def test_day_with_unpersisted_games_inserts_correctly
-    VCR.use_cassette('test_day_with_games_returns_properly') do
+    VCR.use_cassette('test_day_with_unpersisted_games_inserts_correctly') do
       date = Date.new(2014, 3, 1)
       @day = StatsScraper::Scraper::Day.new(date)
       StatsScraper::DB.expects(:persisted_game_ids_for_date).with(date).returns([]).once
@@ -41,7 +41,7 @@ class DayTest < Minitest::Test
   end
 
   def test_day_with_persited_game_only_persists_other_games
-    VCR.use_cassette('test_day_with_games_returns_properly') do
+    VCR.use_cassette('test_day_with_persited_game_only_persists_other_games') do
       date = Date.new(2014, 3, 1)
       persisted_ids = [ 2013020902, 2013020906 ]
       @day = StatsScraper::Scraper::Day.new(date)

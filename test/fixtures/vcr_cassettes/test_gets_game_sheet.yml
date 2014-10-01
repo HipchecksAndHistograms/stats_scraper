@@ -23,9 +23,9 @@ http_interactions:
       Content-Type:
       - text/html; charset=UTF-8
       Cache-Control:
-      - private, max-age=47
+      - private, max-age=54
       Date:
-      - Thu, 21 Aug 2014 04:41:30 GMT
+      - Wed, 01 Oct 2014 01:52:15 GMT
       Transfer-Encoding:
       - chunked
       Connection:
@@ -14591,5 +14591,5 @@ http_interactions:
         class=\"print-class\" align=\"center\"><script languange=\"javascript\" type=\"text/javascript\"
         src=\"http://www.nhl.com/scores/htmlreports/scripts/plBottom.js\"><!--&nbsp;--></script></div>\r\n</body>\r\n</html>"
     http_version: 
-  recorded_at: Thu, 21 Aug 2014 04:41:31 GMT
+  recorded_at: Wed, 01 Oct 2014 01:52:15 GMT
 recorded_with: VCR 2.9.2

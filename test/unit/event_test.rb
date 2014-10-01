@@ -1,10 +1,10 @@
 require 'test_helper'
 
 class EventTest < Minitest::Test
-  def test_gets_game_sheet
-    @game = StatsScraper::Scraper::Game.new("2013020902", Date.new(2014, 3, 1))
+  def test_parses_events_correctly
+    VCR.use_cassette('test_parses_events_correctly') do
+      @game = StatsScraper::Scraper::Game.new("2013020902", Date.new(2014, 3, 1))
 
-    VCR.use_cassette('test_gets_game_sheet') do
       assert_equal [1, 2, 3], @game.events.map(&:period).uniq
       assert_equal ["PSTR", "FAC", "HIT", "SHOT", "BLOCK", "STOP", "TAKE", "MISS", "PENL", "GIVE", "GOAL", "PEND", "GEND"], @game.events.map(&:event_name).uniq
       assert_equal (1..306).to_a, @game.events.map(&:event_number)

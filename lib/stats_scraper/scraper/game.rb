@@ -10,6 +10,8 @@ module StatsScraper
       def initialize(id, date)
         @id = id
         @date = date
+
+        raise InvalidResponse, "Game requested for date #{@date} but game sheet says date was #{game_sheet_date}." unless @date == game_sheet_date
       end
 
       def events
@@ -59,7 +61,7 @@ module StatsScraper
       end
 
       def information_box
-        @information_box ||= game_sheet.xpath("//table[1]/tr[1]/td/table/tr/td/table/tr")
+        @information_box ||= game_sheet.at_xpath("//table[1]/tr[1]/td/table/tr/td/table/tr")
       end
 
       def game_sheet
@@ -94,8 +96,12 @@ module StatsScraper
         information_box.xpath(".//table[@id='#{side}']/tr[3]/td").children.first.text
       end
 
+      def game_sheet_date
+        @game_sheet_date ||= Date.strptime(information_box.xpath(".//table[@id='GameInfo']/tr[4]/td").text, '%a, %b %d, %Y')
+      end
+
       def attendance_row
-        @attendance_row ||= information_box.xpath(".//table[@id='GameInfo']/tr[5]/td").text.match(/Attendance ([0-9,]*).at.(.+)/).captures
+        @attendance_row ||= information_box.xpath(".//table[@id='GameInfo']/tr[5]/td").text.match(/Attendance ?([0-9,]*).at.(.+)/).captures
       end
     end
   end

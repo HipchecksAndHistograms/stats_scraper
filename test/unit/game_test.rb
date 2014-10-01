@@ -1,10 +1,10 @@
 require 'test_helper'
 
-class DayTest < Minitest::Test
+class GameTest < Minitest::Test
   def test_gets_game_sheet
-    @game = StatsScraper::Scraper::Game.new(2013020902, Date.new(2014, 3, 1))
-
     VCR.use_cassette('test_gets_game_sheet') do
+      @game = StatsScraper::Scraper::Game.new(2013020902, Date.new(2014, 3, 1))
+
       assert_equal 306,                   @game.events.length
       assert_equal "WASHINGTON CAPITALS", @game.visiting_team
       assert_equal "BOSTON BRUINS",       @game.home_team
@@ -14,7 +14,7 @@ class DayTest < Minitest::Test
   end
 
   def test_persists_correctly
-    VCR.use_cassette('test_gets_game_sheet') do
+    VCR.use_cassette('test_persists_correctly') do
       date = Date.new(2014, 3, 1)
       @game = StatsScraper::Scraper::Game.new(2013020902, date)
 
@@ -35,9 +35,9 @@ class DayTest < Minitest::Test
   end
 
   def test_game_with_no_attendance_parses_correctly
-    @game_with_no_attendance_number = StatsScraper::Scraper::Game.new(2010010006, Date.new(2010, 9, 21))
-
     VCR.use_cassette('test_game_with_no_attendance_parses_correctly') do
+      @game_with_no_attendance_number = StatsScraper::Scraper::Game.new(2010010006, Date.new(2010, 9, 21))
+
       assert_equal 328,                   @game_with_no_attendance_number.events.length
       assert_equal "OTTAWA SENATORS",     @game_with_no_attendance_number.visiting_team
       assert_equal "TORONTO MAPLE LEAFS", @game_with_no_attendance_number.home_team
