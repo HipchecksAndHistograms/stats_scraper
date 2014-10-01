@@ -27,10 +27,26 @@ class GameTest < Minitest::Test
         visiting_team: 'WASHINGTON CAPITALS'
       }
 
+      StatsScraper::DB.expects(:insert_events).once
+      StatsScraper::DB.expects(:insert_players_on_ice).once
       StatsScraper::DB.expects(:insert_game).with(game_hash).once
-      @game.events.each { |event| event.expects(:persist) }
 
-      @game.persist
+      assert @game.persist
+    end
+  end
+
+  def test_game_that_fails_to_persist_removes_database_entries
+    VCR.use_cassette('test_game_that_fails_to_persist_removes_database_entries') do
+      date = Date.new(2014, 3, 1)
+      @game = StatsScraper::Scraper::Game.new(2013020902, date)
+
+      StatsScraper::DB.expects(:insert_events).once
+      StatsScraper::DB.expects(:insert_players_on_ice).once
+      StatsScraper::DB.expects(:insert_game).once.raises(NoMethodError)
+      StatsScraper::DB.expects(:remove_game_from_db).with(@game.id).once.returns(nil)
+      StatsScraper::DB.expects(:insert_anomaly).once.returns(nil)
+
+      assert !@game.persist
     end
   end
 

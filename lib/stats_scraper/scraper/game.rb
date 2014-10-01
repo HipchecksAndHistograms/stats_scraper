@@ -39,10 +39,19 @@ module StatsScraper
 
       def persist
         StatsScraper::Logger.log("Game", "Persisting game #{@id}.")
-        events.each(&:persist)
-        StatsScraper::Logger.log("Game", "Persisted #{events.count} events for game #{@id}.")
+        DB.insert_events(events.map(&:to_hash))
+        DB.insert_players_on_ice(events.map(&:players_on_ice).flatten)
         DB.insert_game(to_hash)
-        StatsScraper::Logger.log("Game", "Persisted game #{id}.")
+        StatsScraper::Logger.log("Game", "Persisted game #{@id}.")
+
+        true
+      rescue => e
+        anomaly = "Unable to persist game #{@id}: #{e}"
+        StatsScraper::Logger.log("Game", anomaly)
+        DB.remove_game_from_db(@id)
+        DB.insert_anomaly(@id, "Game", anomaly)
+
+        false
       end
 
       def game_sheet_date

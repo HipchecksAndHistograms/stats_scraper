@@ -40,11 +40,6 @@ module StatsScraper
         }
       end
 
-      def persist
-        players_on_ice.each { |player| DB.insert_player_on_ice(player) }
-        DB.insert_event(to_hash)
-      end
-
       def players_on_ice
         @players_on_ice ||= begin
           players = [

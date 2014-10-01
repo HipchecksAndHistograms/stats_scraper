@@ -61,8 +61,8 @@ module StatsScraper
       database[:games].insert(game)
     end
 
-    def self.insert_event(event)
-      database[:events].insert(event)
+    def self.insert_events(events)
+      database[:events].multi_insert(events)
     end
 
     def self.insert_player_on_ice(player_on_ice)
@@ -71,6 +71,12 @@ module StatsScraper
 
     def self.insert_anomaly(id, type, description)
       database[:anomalies].insert(id: id, type: type, description: description)
+    end
+
+    def self.remove_game_from_db(id)
+      database[:events].where(game_id: id).delete
+      database[:players_on_ice].where(game_id: id).delete
+      database[:games].where(game_id: id).delete
     end
 
     def self.persisted_game_ids_for_date(date)
