@@ -25,7 +25,7 @@ module StatsScraper
               game.errors.each do |error, present|
                 if present
                   StatsScraper::Logger.log("Day", error)
-                  StatsScraper::DB.insert_anomaly(game.id, "Game", error)
+                  StatsScraper::DB.insert_anomaly(game, error)
                 end
               end
             end

@@ -21,6 +21,16 @@ namespace :scraper do
   task :run do
     StatsScraper::Scraper.run
   end
+
+  desc "run scraper for day"
+  task :run_for_day do
+    StatsScraper::Scraper.run_for_day
+  end
+
+  desc "run scraper for game"
+  task :run_for_game do
+    StatsScraper::Scraper.run_for_game
+  end
 end
 
 task default: [:test]

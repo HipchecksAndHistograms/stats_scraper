@@ -46,10 +46,15 @@ module StatsScraper
 
         true
       rescue => e
-        anomaly = "Unable to persist game #{@id}: #{e}"
-        StatsScraper::Logger.log("Game", anomaly)
-        DB.remove_game_from_db(@id)
-        DB.insert_anomaly(@id, "Game", anomaly)
+        case e
+        when Sequel::UniqueConstraintViolation
+          StatsScraper::Logger.log("Game", "Game #{@id} already persisted in database. Skipping.")
+        else
+          anomaly = "Unable to persist game #{@id}: #{e}"
+          StatsScraper::Logger.log("Game", anomaly)
+          DB.remove_game_from_db(@id)
+          DB.insert_anomaly(self, anomaly)
+        end
 
         false
       end

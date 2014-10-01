@@ -13,5 +13,31 @@ module StatsScraper
         range.persist_days
       end
     end
+
+    def self.run_for_day
+      day = ENV['day']
+
+      if day.nil?
+        StatsScraper::Logger.log("Scraper", "No day provided. Exiting.")
+      else
+        StatsScraper::Logger.log("Scraper", "Running scraper for #{day}.")
+        day = Day.new(day)
+        day.save_to_db
+      end
+    end
+
+    def self.run_for_game
+      game_id = ENV['game_id']
+      date = Date.parse(ENV['date'])
+
+      if game_id.nil?
+        StatsScraper::Logger.log("Scraper", "No game_id provided. Exiting.")
+      elsif date.nil?
+        StatsScraper::Logger.log("Scraper", "No day provided. Exiting.")
+      else
+        game = Game.new(game_id, date)
+        game.persist
+      end
+    end
   end
 end
