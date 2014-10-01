@@ -58,7 +58,31 @@ module StatsScraper
         @game_sheet_date ||= Date.strptime(information_box.xpath(".//table[@id='GameInfo']/tr[4]/td").text, '%a, %b %d, %Y')
       end
 
+      def valid?
+        errors.none? { |key, value| value }
+      end
+
+      def errors
+        @errors ||= begin
+          errors = {}
+          errors.merge('scraped day doesn\'t match game sheet date' => scraped_day_doesnt_match_game_sheet_date)
+          errors.merge('information box isn\'t present' => information_box_isnt_present)
+        end
+      end
+
       private
+
+      def scraped_day_doesnt_match_game_sheet_date
+        date != game_sheet_date
+      rescue
+        nil
+      end
+
+      def information_box_isnt_present
+        information_box.nil?
+      rescue
+        nil
+      end
 
       def to_hash
         {

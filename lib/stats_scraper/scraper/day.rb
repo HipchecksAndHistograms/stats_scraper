@@ -19,12 +19,15 @@ module StatsScraper
           games = links.map { |id| Game.new(id, @date) }
 
           games.select do |game|
-            if game.date == game.game_sheet_date
+            if game.valid?
               true
             else
-              anomaly = "Game requested for date #{game.date} but game sheet says date was #{game.game_sheet_date}."
-              StatsScraper::Logger.log("Day", anomaly)
-              StatsScraper::DB.insert_anomaly(game.id, "Game", anomaly)
+              game.errors.each do |error, present|
+                if present
+                  StatsScraper::Logger.log("Day", error)
+                  StatsScraper::DB.insert_anomaly(game.id, "Game", error)
+                end
+              end
             end
           end
         end
