@@ -48,6 +48,13 @@ module StatsScraper
         String  :current_position
         Integer :number
       end
+
+      database.drop_table? :anomalies
+      database.create_table :anomalies do
+        String :id
+        String :type
+        String :description
+      end
     end
 
     def self.insert_game(game)
@@ -60,6 +67,10 @@ module StatsScraper
 
     def self.insert_player_on_ice(player_on_ice)
       database[:players_on_ice].insert(player_on_ice)
+    end
+
+    def self.insert_anomaly(id, type, description)
+      database[:anomalies].insert(id: id, type: type, description: description)
     end
 
     def self.persisted_game_ids_for_date(date)

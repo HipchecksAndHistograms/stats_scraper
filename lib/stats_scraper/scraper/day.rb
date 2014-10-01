@@ -16,7 +16,15 @@ module StatsScraper
           StatsScraper::Logger.log("Day", "Found #{links.length} games on day #{@date}.")
           links = links.map { |link| Integer(CGI.parse(URI.parse(link).query)['id'].first) }
           StatsScraper::Logger.log("Day", "Creating games for each of #{links.join(',')}.")
-          links.map { |id| Game.new(id, @date) }
+          games = links.map { |id| Game.new(id, @date) }
+
+          games.select do |game|
+            if game.date == game.game_sheet_date
+              true
+            else
+              StatsScraper::DB.insert_anomaly(game.id, "Game", "Game requested for date #{@date} but game sheet says date was #{game_sheet_date}.")
+            end
+          end
         end
       end
 
