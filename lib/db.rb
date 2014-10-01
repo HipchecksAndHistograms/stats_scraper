@@ -59,6 +59,7 @@ module StatsScraper
 
     def self.insert_game(game)
       database[:games].insert(game)
+      database[:anomalies].where(type: "Game", id: game[:game_id]).delete
     end
 
     def self.insert_events(events)
