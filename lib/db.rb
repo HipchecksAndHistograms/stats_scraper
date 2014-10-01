@@ -18,7 +18,7 @@ module StatsScraper
     def self.setup
       database.drop_table? :games
       database.create_table :games do
-        primary_key :id
+        primary_key :game_id
         Date        :date
         String      :venue
         Integer     :attendance
@@ -74,7 +74,7 @@ module StatsScraper
     end
 
     def self.persisted_game_ids_for_date(date)
-      ids = database[:games].select(:id).where(date: date).to_a.map { |g| g[:id] }
+      ids = database[:games].select(:game_id).where(date: date).to_a.map { |g| g[:game_id] }
       StatsScraper::Logger.log("DB", "Found #{ids.count} persisted games for date #{date}.")
       ids
     end

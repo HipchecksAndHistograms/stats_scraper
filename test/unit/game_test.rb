@@ -19,7 +19,7 @@ class GameTest < Minitest::Test
       @game = StatsScraper::Scraper::Game.new(2013020902, date)
 
       game_hash = {
-        id:            2013020902,
+        game_id:       2013020902,
         date:          date,
         venue:         'TD Garden',
         attendance:    17565,

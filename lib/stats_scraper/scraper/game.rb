@@ -53,7 +53,7 @@ module StatsScraper
 
       def to_hash
         {
-          id:            @id,
+          game_id:       @id,
           date:          @date,
           venue:         venue,
           attendance:    attendance,
