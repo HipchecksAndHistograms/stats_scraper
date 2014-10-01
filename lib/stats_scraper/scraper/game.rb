@@ -86,7 +86,7 @@ module StatsScraper
             raise InvalidResponse
           end
           @game_sheet = Nokogiri::HTML(game_sheet)
-          StatsScraper::Logger.log("Game", "Downloaded #{@id} - #{visiting_team} vs. #{home_team}.")
+          StatsScraper::Logger.log("Game", "Downloaded #{@id}.")
           @game_sheet
         end
       end
