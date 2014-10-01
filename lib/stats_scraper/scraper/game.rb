@@ -29,12 +29,12 @@ module StatsScraper
       end
 
       def attendance
-        attendance = attendance_row[0].gsub(',', '')
+        attendance = attendance_row[1].gsub(',', '')
         attendance.empty? ? nil : Integer(attendance)
       end
 
       def venue
-        attendance_row[1]
+        attendance_row[3]
       end
 
       def persist
@@ -52,8 +52,7 @@ module StatsScraper
         else
           anomaly = "Unable to persist game #{@id}: #{e}"
           StatsScraper::Logger.log("Game", anomaly)
-          print e.backtrace.join("\n")
-          print "\n"
+          StatsScraper::Logger.log("Game", e.backtrace.join("\n"))
           DB.remove_game_from_db(@id)
           DB.insert_anomaly(self, anomaly)
         end
@@ -139,7 +138,7 @@ module StatsScraper
       end
 
       def attendance_row
-        @attendance_row ||= information_box.xpath(".//table[@id='GameInfo']/tr[5]/td").text.match(/Attendance ?([0-9,]*).at.(.+)/).captures
+        @attendance_row ||= information_box.xpath(".//table[@id='GameInfo']/tr[5]/td").text.match(/(Attendance )?([0-9,]*)(.at.)?(.+)/).captures
       end
     end
   end
