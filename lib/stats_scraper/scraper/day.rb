@@ -22,7 +22,9 @@ module StatsScraper
             if game.date == game.game_sheet_date
               true
             else
-              StatsScraper::DB.insert_anomaly(game.id, "Game", "Game requested for date #{game.date} but game sheet says date was #{game.game_sheet_date}.")
+              anomaly = "Game requested for date #{game.date} but game sheet says date was #{game.game_sheet_date}."
+              StatsScraper::Logger.log("Day", anomaly)
+              StatsScraper::DB.insert_anomaly(game.id, "Game", anomaly)
             end
           end
         end
