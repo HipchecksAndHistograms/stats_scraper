@@ -21,21 +21,21 @@ module StatsScraper
         StatsScraper::Logger.log("Scraper", "No day provided. Exiting.")
       else
         StatsScraper::Logger.log("Scraper", "Running scraper for #{day}.")
-        day = Day.new(day)
+        day = Day.new(Date.parse(day))
         day.save_to_db
       end
     end
 
     def self.run_for_game
       game_id = ENV['game_id']
-      date = Date.parse(ENV['date'])
+      date = ENV['date']
 
       if game_id.nil?
         StatsScraper::Logger.log("Scraper", "No game_id provided. Exiting.")
       elsif date.nil?
         StatsScraper::Logger.log("Scraper", "No day provided. Exiting.")
       else
-        game = Game.new(game_id, date)
+        game = Game.new(game_id, Date.parse(date))
         game.persist
       end
     end
