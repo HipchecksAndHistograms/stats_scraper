@@ -43,6 +43,7 @@ module StatsScraper
           StatsScraper::Logger.log("Day", "Invalid response code #{page.response.code} for #{@date}!")
           raise InvalidResponse
         end
+        StatsScraper::Logger.log("Day", "Downloaded games for #{@date}. URL: #{page.request.last_uri.to_s}")
         Nokogiri::HTML(page)
       end
 
