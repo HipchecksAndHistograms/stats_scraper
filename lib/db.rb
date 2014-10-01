@@ -51,9 +51,10 @@ module StatsScraper
 
       database.drop_table? :anomalies
       database.create_table :anomalies do
-        String :id
-        String :type
-        String :description
+        String   :id
+        String   :type
+        String   :description
+        DateTime :created_at
       end
     end
 
@@ -71,7 +72,7 @@ module StatsScraper
     end
 
     def self.insert_anomaly(id, type, description)
-      database[:anomalies].insert(id: id, type: type, description: description)
+      database[:anomalies].insert(id: id, type: type, description: description, created_at: DateTime.now)
     end
 
     def self.remove_game_from_db(id)
